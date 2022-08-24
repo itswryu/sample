@@ -18,7 +18,7 @@ Resources:
           ContainerName: "sample-image-container" # Specify the name of your Amazon ECS application's container
           ContainerPort: "8080:8080" # Specify the port for your container where traffic reroutes
         # Optional properties
-        PlatformVersion: "1.3.0" # Specify the version of your Amazon ECS Service
+        PlatformVersion: "1.4.0" # Specify the version of your Amazon ECS Service
         NetworkConfiguration:
           AwsvpcConfiguration:
             Subnets: ["subnet-0dac8754bf8a6b44c", "subnet-058c00b41f06e4240"] # Specify one or more comma-separated subnets in your Amazon ECS service
