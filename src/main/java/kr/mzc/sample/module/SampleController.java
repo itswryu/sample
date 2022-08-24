@@ -10,7 +10,7 @@ public class SampleController {
     @GetMapping("/")
     public String root() {
         JSONObject j = new JSONObject();
-        j.put("Hello", "World2");
+        j.put("Hello", "World");
         return j.toString();
     }
 
