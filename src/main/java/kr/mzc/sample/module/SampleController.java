@@ -16,6 +16,7 @@ public class SampleController {
         JSONObject j = new JSONObject();
         j.put("Hello", "World");
         j.put("build-info", sampleService.getBuildInfo());
+        j.put("server-info", sampleService.getServerInfo());
 
         return j.toString();
     }
