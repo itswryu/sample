@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class SampleService {
@@ -21,25 +25,29 @@ public class SampleService {
         buildInfo.put("group", buildProp.getGroup());
         buildInfo.put("artifact", buildProp.getArtifact());
         buildInfo.put("version", buildProp.getVersion());
-        buildInfo.put("time", buildProp.getTime());
+        ZonedDateTime utcZoned = ZonedDateTime.parse(buildProp.getTime().toString());
+        ZoneId kstZone = ZoneId.of("Asia/Seoul");
+        ZonedDateTime kstZoned = utcZoned.withZoneSameInstant(kstZone);
+        LocalDateTime kstLocal = kstZoned.toLocalDateTime();
+        buildInfo.put("time", kstLocal.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
 
         return buildInfo;
     }
 
     @Bean
     public JSONObject getServerInfo() {
-        JSONObject buildInfo = new JSONObject();
+        JSONObject serverInfo = new JSONObject();
         try {
-            buildInfo.put("hostname", java.net.InetAddress.getLocalHost().getHostName());
+            serverInfo.put("hostname", java.net.InetAddress.getLocalHost().getHostName());
         } catch (Exception e){
-            buildInfo.put("hostname", "Unknown");
+            serverInfo.put("hostname", "Unknown");
         }
         try {
-            buildInfo.put("ip", java.net.InetAddress.getLocalHost().getHostAddress());
+            serverInfo.put("ip", java.net.InetAddress.getLocalHost().getHostAddress());
         } catch (Exception e){
-            buildInfo.put("ip", "Unknown");
+            serverInfo.put("ip", "Unknown");
         }
 
-        return buildInfo;
+        return serverInfo;
     }
 }
